@@ -46,6 +46,21 @@ public class TinyPngTask extends DefaultTask {
         }
     }
 
+    /**
+     * 是否超过限制的大小进行压缩
+     * @param fileS
+     * @return
+     */
+    public static boolean isOverSize(long fileS) {
+        //先转换kb，再比较
+        if(!(configuration.overSize ?: false)
+                || ((double)fileS / 1024) >= Double.valueOf(configuration.overSize)) {
+            return true
+        }
+
+        return false
+    }
+
     public static String generateMD5(File file) {
         MessageDigest digest = MessageDigest.getInstance("MD5")
         file.withInputStream(){ is ->
@@ -91,6 +106,10 @@ public class TinyPngTask extends DefaultTask {
                 println("find target pic >>>>>>>>>>>>> $filePath")
 
                 def fis = new FileInputStream(file)
+
+                if (!isOverSize(fis.available())) {
+                    continue label
+                }
 
                 labelTinifyAccount:
                 try {
