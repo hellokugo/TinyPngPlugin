@@ -42,6 +42,9 @@ Then you need to apply the plugin and configure your `tinyinfo` by adding the fo
 			 * a key failure immediately switch the second key to do compression
 			 */
         ]
+
+        overSize = '200' //Images larger than the specified size will be compressed in kb
+
     }
 
 If you are using `Android Studio`, you can find the generate task option in `tinypng` group. Or alternatively, you run `./gradlew tinyPng` in your terminal.
